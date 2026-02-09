@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/png" sizes="32x32" href="./assets/images/favicon-32x32.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Karla:wght@400;700&display=swap" rel="stylesheet">
+  
+  <title>Formulario de contacto</title>
+
+  <style>
+    /* Reset básico */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Karla', sans-serif;
+      font-size: 16px;
+      font-weight: 400;
+      background-color: hsl(148, 38%, 91%);
+      color: hsl(187, 24%, 22%);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 736px;
+      margin: 2rem auto;
+    }
+
+    .form-wrapper {
+      background-color: hsl(0, 0%, 100%);
+      padding: 32px;
+      border-radius: 16px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .form-title {
+      font-size: 32px;
+      font-weight: 700;
+      color: hsl(187, 24%, 22%);
+      margin-bottom: 32px;
+    }
+
+    .contact-form {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      position: relative;
+    }
+
+    label {
+      font-size: 16px;
+      font-weight: 400;
+      color: hsl(187, 24%, 22%);
+    }
+
+    .required {
+      color: hsl(169, 82%, 27%);
+    }
+
+    .form-input,
+    .form-textarea {
+      padding: 12px 16px;
+      border: 1px solid hsl(186, 15%, 59%);
+      border-radius: 8px;
+      font-family: 'Karla', sans-serif;
+      font-size: 16px;
+      color: hsl(187, 24%, 22%);
+      transition: border-color 0.3s ease;
+    }
+
+    .form-input:hover,
+    .form-textarea:hover {
+      border-color: hsl(169, 82%, 27%);
+    }
+
+    .form-input:focus,
+    .form-textarea:focus {
+      outline: none;
+      border-color: hsl(169, 82%, 27%);
+    }
+
+    .form-input.error,
+    .form-textarea.error {
+      border-color: hsl(0, 66%, 54%);
+    }
+
+    .form-textarea {
+      resize: vertical;
+      min-height: 105px;
+    }
+
+    .error-message {
+      display: none;
+      color: hsl(0, 66%, 54%);
+      font-size: 14px;
+      margin-top: 4px;
+    }
+
+    .form-group.error .error-message {
+      display: block;
+    }
+
+    /* Radio buttons */
+    .radio-group {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .radio-label {
+      display: flex;
+      align-items: center;
+      padding: 12px 16px;
+      border: 1px solid hsl(186, 15%, 59%);
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      position: relative;
+    }
+
+    .radio-label:hover {
+      border-color: hsl(169, 82%, 27%);
+    }
+
+    .radio-label input[type="radio"] {
+      position: absolute;
+      opacity: 0;
+      cursor: pointer;
+    }
+
+    .radio-custom {
+      width: 20px;
+      height: 20px;
+      border: 2px solid hsl(186, 15%, 59%);
+      border-radius: 50%;
+      margin-right: 12px;
+      position: relative;
+      flex-shrink: 0;
+    }
+
+    .radio-label input[type="radio"]:checked ~ .radio-custom {
+      border-color: hsl(169, 82%, 27%);
+    }
+
+    .radio-label input[type="radio"]:checked ~ .radio-custom::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 10px;
+      height: 10px;
+      background-color: hsl(169, 82%, 27%);
+      border-radius: 50%;
+    }
+
+    .radio-label:has(input[type="radio"]:checked) {
+      background-color: hsl(148, 38%, 91%);
+      border-color: hsl(169, 82%, 27%);
+    }
+
+    .radio-text {
+      font-size: 16px;
+      color: hsl(187, 24%, 22%);
+    }
+
+    /* Checkbox */
+    .checkbox-group {
+      margin-top: 8px;
+    }
+
+    .checkbox-label {
+      display: flex;
+      align-items: flex-start;
+      cursor: pointer;
+      position: relative;
+    }
+
+    .checkbox-label input[type="checkbox"] {
+      position: absolute;
+      opacity: 0;
+      cursor: pointer;
+    }
+
+    .checkbox-custom {
+      width: 20px;
+      height: 20px;
+      border: 2px solid hsl(186, 15%, 59%);
+      border-radius: 4px;
+      margin-right: 12px;
+      position: relative;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    .checkbox-label input[type="checkbox"]:checked ~ .checkbox-custom {
+      background-color: hsl(169, 82%, 27%);
+      border-color: hsl(169, 82%, 27%);
+    }
+
+    .checkbox-label input[type="checkbox"]:checked ~ .checkbox-custom::after {
+      content: '✓';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      color: hsl(0, 0%, 100%);
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    .checkbox-text {
+      font-size: 16px;
+      color: hsl(187, 24%, 22%);
+      line-height: 1.5;
+    }
+
+    /* Botón de envío */
+    .btn-submit {
+      background-color: hsl(169, 82%, 27%);
+      color: hsl(0, 0%, 100%);
+      border: none;
+      padding: 16px;
+      border-radius: 8px;
+      font-family: 'Karla', sans-serif;
+      font-size: 18px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      margin-top: 16px;
+    }
+
+    .btn-submit:hover {
+      background-color: hsl(169, 82%, 20%);
+    }
+
+    .btn-submit:disabled {
+      background-color: hsl(186, 15%, 59%);
+      cursor: not-allowed;
+    }
+
+    /* Mensaje de éxito */
+    .success-message {
+      display: none;
+      position: fixed;
+      top: 24px;
+      left: 50%;
+      transform: translateX(-50%);
+      background-color: hsl(187, 24%, 22%);
+      color: hsl(0, 0%, 100%);
+      padding: 24px;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+      max-width: 450px;
+      width: calc(100% - 40px);
+      z-index: 1000;
+      animation: slideDown 0.3s ease;
+    }
+
+    .success-message.show {
+      display: block;
+    }
+
+    @keyframes slideDown {
+      from {
+        transform: translateX(-50%) translateY(-100%);
+        opacity: 0;
+      }
+      to {
+        transform: translateX(-50%) translateY(0);
+        opacity: 1;
+      }
+    }
+
+    .success-content {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .success-icon {
+      width: 24px;
+      height: 24px;
+      background-color: hsl(169, 82%, 27%);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 16px;
+      margin-bottom: 8px;
+    }
+
+    .success-title {
+      font-size: 20px;
+      font-weight: 700;
+      color: hsl(0, 0%, 100%);
+    }
+
+    .success-text {
+      font-size: 16px;
+      color: hsl(148, 38%, 91%);
+      line-height: 1.5;
+    }
+
+    /* Autor */
+    .autor {
+      font-size: 11px;
+      text-align: center;
+      margin-top: 20px;
+      color: hsl(187, 24%, 22%);
+    }
+
+    .autor a {
+      color: hsl(169, 82%, 27%);
+      text-decoration: none;
+    }
+
+    .autor a:hover {
+      text-decoration: underline;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .form-wrapper {
+        padding: 24px;
+      }
+
+      .form-title {
+        font-size: 24px;
+        margin-bottom: 24px;
+      }
+
+      .form-row {
+        grid-template-columns: 1fr;
+        gap: 24px;
+      }
+
+      .contact-form {
+        gap: 20px;
+      }
+
+      .success-message {
+        top: 16px;
+      }
+    }
+
+    @media (max-width: 375px) {
+      .form-wrapper {
+        padding: 20px;
+      }
+
+      body {
+        padding: 12px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="container">
+    <div class="form-wrapper">
+      <h1 class="form-title">Contáctanos</h1>
+      
+      <form action="db_contactanos.php" method="POST" id="contactForm" class="contact-form">
+        <div class="form-row">
+          <div class="form-group">
+            <label for="nombre">Nombre <span class="required">*</span></label>
+            <input type="text" id="nombre" name="nombre" class="form-input" required>
+            <span class="error-message">Este campo es obligatorio</span>
+          </div>
+          
+          <div class="form-group">
+            <label for="apellido">Apellido <span class="required">*</span></label>
+            <input type="text" id="apellido" name="apellido" class="form-input" required>
+            <span class="error-message">Este campo es obligatorio</span>
+          </div>
+        </div>
+        
+        <div class="form-group">
+          <label for="email">Dirección de correo electrónico <span class="required">*</span></label>
+          <input type="email" id="email" name="email" class="form-input" required>
+          <span class="error-message email-error">Por favor, introduce una dirección de correo electrónico válida</span>
+        </div>
+        
+        <div class="form-group">
+          <label>Tipo de consulta <span class="required">*</span></label>
+          <div class="radio-group">
+            <label class="radio-label">
+              <input type="radio" name="tipo" value="general" required>
+              <span class="radio-custom"></span>
+              <span class="radio-text">Consulta general</span>
+            </label>
+            <label class="radio-label">
+              <input type="radio" name="tipo" value="soporte">
+              <span class="radio-custom"></span>
+              <span class="radio-text">Solicitud de soporte</span>
+            </label>
+          </div>
+          <span class="error-message">Por favor, selecciona un tipo de consulta</span>
+        </div>
+        
+        <div class="form-group">
+          <label for="mensaje">Mensaje <span class="required">*</span></label>
+          <textarea id="mensaje" name="mensaje" class="form-textarea" rows="5" required></textarea>
+          <span class="error-message">Este campo es obligatorio</span>
+        </div>
+        
+        <div class="form-group checkbox-group">
+          <label class="checkbox-label">
+            <input type="checkbox" id="autorizo" name="autorizo" value="1" required>
+            <span class="checkbox-custom"></span>
+            <span class="checkbox-text">Autorizó para ser contactado por el equipo <span class="required">*</span></span>
+          </label>
+          <span class="error-message">Para enviar este formulario, por favor consiente ser contactado</span>
+        </div>
+        
+        <button type="submit" class="btn-submit">Enviar</button>
+      </form>
+    </div>
+    
+    <div class="success-message" id="successMessage">
+      <div class="success-content">
+        <div class="success-icon">✓</div>
+        <h2 class="success-title">¡Mensaje enviado!</h2>
+        <p class="success-text">Gracias por completar el formulario. ¡Nos pondremos en contacto pronto!</p>
+      </div>
+    </div>
+  </main>
+  
+  <div class="autor">
+    Formulario de contacto @2025. 
+    Desarrollado por <a href="#">Alan.C.Ake</a>.
+  </div>
+
+  <script>
+    // Obtener elementos del formulario
+    const form = document.getElementById('contactForm');
+    const successMessage = document.getElementById('successMessage');
+
+    // Función para mostrar errores
+    function showError(element, show = true) {
+      const formGroup = element.closest('.form-group');
+      if (show) {
+        formGroup.classList.add('error');
+        element.classList.add('error');
+      } else {
+        formGroup.classList.remove('error');
+        element.classList.remove('error');
+      }
+    }
+
+    // Validar campo de texto
+    function validateTextField(input) {
+      const value = input.value.trim();
+      if (value === '') {
+        showError(input, true);
+        return false;
+      } else {
+        showError(input, false);
+        return true;
+      }
+    }
+
+    // Validar email
+    function validateEmail(input) {
+      const value = input.value.trim();
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      
+      if (value === '') {
+        showError(input, true);
+        return false;
+      } else if (!emailRegex.test(value)) {
+        showError(input, true);
+        return false;
+      } else {
+        showError(input, false);
+        return true;
+      }
+    }
+
+    // Validar radio buttons
+    function validateRadio(name) {
+      const radios = document.getElementsByName(name);
+      const formGroup = radios[0].closest('.form-group');
+      let isChecked = false;
+      
+      radios.forEach(radio => {
+        if (radio.checked) {
+          isChecked = true;
+        }
+      });
+      
+      if (!isChecked) {
+        formGroup.classList.add('error');
+        return false;
+      } else {
+        formGroup.classList.remove('error');
+        return true;
+      }
+    }
+
+    // Validar checkbox
+    function validateCheckbox(checkbox) {
+      const formGroup = checkbox.closest('.form-group');
+      
+      if (!checkbox.checked) {
+        formGroup.classList.add('error');
+        return false;
+      } else {
+        formGroup.classList.remove('error');
+        return true;
+      }
+    }
+
+    // Agregar validación en tiempo real
+    const nombre = document.getElementById('nombre');
+    const apellido = document.getElementById('apellido');
+    const email = document.getElementById('email');
+    const mensaje = document.getElementById('mensaje');
+    const autorizo = document.getElementById('autorizo');
+    const tipoRadios = document.getElementsByName('tipo');
+
+    // Eventos de blur para validación
+    nombre.addEventListener('blur', () => validateTextField(nombre));
+    apellido.addEventListener('blur', () => validateTextField(apellido));
+    email.addEventListener('blur', () => validateEmail(email));
+    mensaje.addEventListener('blur', () => validateTextField(mensaje));
+
+    // Evento para radio buttons
+    tipoRadios.forEach(radio => {
+      radio.addEventListener('change', () => validateRadio('tipo'));
+    });
+
+    // Evento para checkbox
+    autorizo.addEventListener('change', () => validateCheckbox(autorizo));
+
+    // Limpiar errores al escribir
+    nombre.addEventListener('input', () => {
+      if (nombre.value.trim() !== '') {
+        showError(nombre, false);
+      }
+    });
+
+    apellido.addEventListener('input', () => {
+      if (apellido.value.trim() !== '') {
+        showError(apellido, false);
+      }
+    });
+
+    email.addEventListener('input', () => {
+      if (email.value.trim() !== '') {
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (emailRegex.test(email.value.trim())) {
+          showError(email, false);
+        }
+      }
+    });
+
+    mensaje.addEventListener('input', () => {
+      if (mensaje.value.trim() !== '') {
+        showError(mensaje, false);
+      }
+    });
+
+    // Manejar el envío del formulario
+    form.addEventListener('submit', function(e) {
+      // Validar todos los campos antes de enviar
+      const isNombreValid = validateTextField(nombre);
+      const isApellidoValid = validateTextField(apellido);
+      const isEmailValid = validateEmail(email);
+      const isTipoValid = validateRadio('tipo');
+      const isMensajeValid = validateTextField(mensaje);
+      const isAutorizoValid = validateCheckbox(autorizo);
+      
+      // Si algún campo no es válido, prevenir el envío
+      if (!isNombreValid || !isApellidoValid || !isEmailValid || 
+          !isTipoValid || !isMensajeValid || !isAutorizoValid) {
+        e.preventDefault();
+        
+        // Hacer scroll al primer error
+        const firstError = document.querySelector('.form-group.error');
+        if (firstError) {
+          firstError.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+      }
+      // Si todo es válido, el formulario se enviará normalmente a db_contactanos.php
+    });
+  </script>
+</body>
+</html>
