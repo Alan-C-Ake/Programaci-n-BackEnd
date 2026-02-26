@@ -1,3 +1,4 @@
+// Alan Alberto Colli Ake
 const fs = require('fs'); // Importa la herramienta de sistema de archivos
 
 fs.writeFile('Archivo.txt', 'Hola desde NodeJS soy Alan', (err) => {
@@ -13,3 +14,4 @@ fs.writeFile('Archivo.txt', 'Hola desde NodeJS soy Alan', (err) => {
         console.log(data);
     });
 });
+
