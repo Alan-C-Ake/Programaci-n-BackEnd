@@ -1,3 +1,4 @@
+//Alan Alberto Colli Ake
 //import generateName from 'sillyname';
 
 //const sillyName = generateName();
@@ -9,4 +10,5 @@ import superheroes from 'superheroes';
 const hero = superheroes[Math.floor(Math.random() * superheroes.length)];
 
 console.log('Superhéroe aleatorio:');
+
 console.log(hero);
