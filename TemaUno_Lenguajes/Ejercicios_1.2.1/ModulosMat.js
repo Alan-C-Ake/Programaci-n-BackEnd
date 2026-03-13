@@ -1,3 +1,4 @@
+//Alan Alberto Colli Ake
 // i) Crea un módulo que contenga funciones matemáticas aritméticas (suma, resta, etc.) y utilízalo en otro archivo.
 // Módulo de operaciones matemáticas
 
