@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Videojuego Aleatorio</title>
+  <link rel="stylesheet" href="/styles/main.css">
+</head>
+<body>
+
+  <h1>🎮 Información del Videojuego 🎮</h1>
+
+  <div class="card" style="background-image: url('<%= image %>');">
+    <div class="overlay">
+
+      <h2><%= name %></h2>
+
+      <p class="etiqueta">Fecha de lanzamiento:</p>
+      <p class="dato"><%= released %></p>
+
+      <p class="etiqueta">Metacritic Score:</p>
+      <p class="dato-score"><%= metacritic %></p>
+
+      <p class="etiqueta">□ ⛌ ○ △ Plataformas △ ○ ⛌ □</p>
+      <ul class="platforms-list">
+        <% platforms.forEach(p => { %>
+          <li><%= p %></li>
+        <% }) %>
+      </ul>
+
+    </div>
+  </div>
+
+  <div class="footer">
+    <a href="/" class="btn-refresh">Cargar otro juego</a>
+  </div>
+
+</body>
+</html>
