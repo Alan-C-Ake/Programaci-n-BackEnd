@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 // Alan Alberto Colli Ake 8-B
+=======
+//Alan Alberto Colli Ake 8-B
+>>>>>>> d4af91c6d321e0fd722156fa0d08e97014985c72
 import express from 'express';
 import dotenv from 'dotenv';
 import mongoose from 'mongoose';
@@ -104,5 +108,10 @@ app.delete('/usuario/:id', async (req, res) => {
 });
 
 app.listen(puerto, () => {
+<<<<<<< HEAD
     console.log(`Servidor Corriendo en http://localhost:${puerto}`);
 });
+=======
+    console.log(`Servidor escuchando en http://localhost:${puerto}`);
+});
+>>>>>>> d4af91c6d321e0fd722156fa0d08e97014985c72
