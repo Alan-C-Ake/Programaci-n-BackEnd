@@ -1,0 +1,16 @@
+{
+  "name": "4.1_pruebas",
+  "version": "1.0.0",
+  "description": "",
+  "main": "suma.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "devDependencies": {
+    "jest": "^30.4.2"
+  }
+}
